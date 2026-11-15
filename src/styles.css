@@ -957,11 +957,15 @@ button {
 /* Legend                                                            */
 /* ---------------------------------------------------------------- */
 
+/* Everything the legend holds wraps inside its own card. When the
+   categories and keys cannot sit beside the toggle — the narrow phone
+   card — they drop below it rather than running past the card's edge. */
 .legend {
   position: absolute;
   left: var(--sp-3);
   bottom: var(--sp-3);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--sp-1);
   max-width: min(470px, calc(100% - 24px));
@@ -997,7 +1001,11 @@ button {
   display: none;
 }
 
+/* A zero basis means the categories and the keys are placed by the room
+   they need at the least, so they stay beside the toggle whenever they
+   fit, and then share what the card has left. */
 .legend__items {
+  flex: 1 1 0;
   display: flex;
   flex-wrap: wrap;
   gap: 3px var(--sp-3);
@@ -1007,12 +1015,13 @@ button {
   border-left: 1px solid var(--line);
 }
 
+/* Labels may break onto a second line, but only when a column is
+   narrower than the label itself. */
 .legend__item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: var(--t-xs);
-  white-space: nowrap;
   color: var(--ink-2);
 }
 
@@ -1024,11 +1033,15 @@ button {
   box-shadow: inset 0 0 0 1px rgba(16, 48, 58, 0.08);
 }
 
-/* The clinical zone key: a second, quieter group beside the
-   categories, with the uniform colour carried in the border. */
-/* Two captioned keys, side by side, divided off from the categories. */
+/* Three captioned keys — clinical zones, vertical circulation, quiet
+   facilities — divided off from the categories, with each zone's colour
+   carried in the swatch border. They sit side by side where there is
+   room and stack where there is not; three in a row is wider than the
+   card can be, so they must be free to wrap. */
 .legend__keys {
+  flex: 1 1 0;
   display: flex;
+  flex-wrap: wrap;
   gap: var(--sp-3);
   padding: 2px 2px 2px var(--sp-2);
   border-left: 1px solid var(--line);
@@ -2045,8 +2058,19 @@ button {
   .header__badge {
     display: none;
   }
+  /* Wide enough that the open legend wraps into a short card rather than
+     one long column — 190px made it taller than the map itself on a
+     small phone — and no wider than the space left of the zoom controls:
+     12px in from the left, the controls 8px in from the right and 48px
+     across with their border, leaving a 6px gap between the two. */
   .legend {
-    max-width: 190px;
+    max-width: min(470px, calc(100% - 74px));
+  }
+  /* The toggle heads the card and each section takes the full width
+     beneath it, so the categories run two to a line instead of one. */
+  .legend__items,
+  .legend__keys {
+    flex-basis: 100%;
   }
 
   /* Keep the mobile map controls compact without removing any actions. */
