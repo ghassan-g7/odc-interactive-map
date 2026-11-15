@@ -35,11 +35,12 @@ jobs:
           # could read it back out.
           persist-credentials: false
 
-      # node-version stays at 20: this is the Node the project is built
-      # and tested with, independent of the action's own runtime.
+      # node-version is the Node the project is built and tested with,
+      # independent of the action's own runtime. 24 is a supported LTS
+      # line; Node 20 reached end of life on 2026-04-30.
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
